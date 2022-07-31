@@ -3,8 +3,11 @@
         <post-form @create="addPost($event)"></post-form>
         <div class="content-wrapper">
             <div v-if="postsAreLoaded" class="list-wrapper">
-                <my-filter class="my-filter" @update="sortBy($event)" v-model="sortOprion" :options="sortOptions"></my-filter>
-                <post-list :posts="posts" @removePost="removePost($event)" style="margin-top: 2rem; width:100%"></post-list>
+                <div class="list-header">
+                    <list-search class="my-list-search" @update="find($event)" v-model="searchQuery"></list-search>
+                    <my-filter class="my-filter" @update="sortBy($event)" v-model="sortOprion" :options="sortOptions"></my-filter>
+                </div>
+                <post-list :posts="sortedAndFoundPosts" @removePost="removePost($event)" style="margin-top: 2rem; width:100%"></post-list>
             </div>
             <load-icon v-else class="loader"></load-icon>
         </div>
@@ -19,6 +22,7 @@ export default {
             posts: [],
             postsAreLoaded: false,
             sortOprion: "",
+            searchQuery:"",
             sortOptions: [
                 {value: "title", name: "By title"},
                 {value: "body", name: "By content"},
@@ -52,10 +56,15 @@ export default {
     mounted(){
         this.fetchPosts()
     },
-    watch:{
-        sortOprion(newVal, oldVal){
-            this.posts.sort((a, b)=>{
-                return a[newVal] > b[newVal] ? 1 : (a[newVal] < b[newVal] ? -1 : 0)
+    computed:{
+        sortedPosts(){
+            return [...this.posts].sort((a, b)=>{
+                return a[this.sortOprion] > b[this.sortOprion] ? 1 : (a[this.sortOprion] < b[this.sortOprion] ? -1 : 0)
+            })
+        },
+        sortedAndFoundPosts(){
+            return this.sortedPosts.filter((post)=>{
+                return post.title.toLowerCase().includes(this.searchQuery)
             })
         }
     }
@@ -80,8 +89,17 @@ export default {
     display: flex;
     flex-direction: column;
  }
+ .list-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+ }
+ .my-list-search{
+    align-self: center;
+    width: 25%;
+ }
  .my-filter{
-    align-self: flex-end;
+    align-self: center;
     width: 25%;
     padding: 10px 15px;
  }

@@ -26,4 +26,13 @@ export default {
 </script>
 
 <style scoped>
+  select{
+    border-radius: 3px;
+    border-width: 2px;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-top-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-right-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-bottom-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-left-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  }
 </style>
