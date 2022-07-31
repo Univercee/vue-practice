@@ -45,14 +45,13 @@ export default {
     margin-right: 10px;
   }
   .post-list-enter-active, .post-list-leave-active {
-    transition: all .5s;
+    transition: all .7s;
   }
-  .post-list-enter{
-    opacity: .5;
-    transform: translateY(30px);
-  }
-  .post-list-leave-to {
+  .post-list-enter, .post-list-leave-to {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateX(50px);
+  }
+  .post-list-move {
+    transition: transform .7s;
   }
 </style>
