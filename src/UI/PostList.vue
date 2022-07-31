@@ -1,8 +1,8 @@
 <template>
   <div class="container" v-if="posts.length">
-    <div v-for="post in posts" :key="post.id">
-      <post-item :post="post" @remove="remove($event)"></post-item>
-    </div>
+  <transition-group name="post-list">
+    <post-item v-for="post in posts" :key="post.id" :post="post" @remove="remove($event)"></post-item>
+  </transition-group>
   </div>
   <div class="container" v-else>
     <div class="empty">List is empty</div>
@@ -39,5 +39,20 @@ export default {
     justify-self: center;
     color: firebrick;
     font-size: 30px;
+  }
+  .post-list-item {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .post-list-enter-active, .post-list-leave-active {
+    transition: all .5s;
+  }
+  .post-list-enter{
+    opacity: .5;
+    transform: translateY(30px);
+  }
+  .post-list-leave-to {
+    opacity: 0;
+    transform: translateY(30px);
   }
 </style>

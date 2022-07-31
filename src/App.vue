@@ -65,9 +65,10 @@ export default {
 <style>
  *{
     font-size: 16px;
+    font-family: sans-serif;
  }
  .app-container{
-    margin: 0 20%;
+    margin: 3% 20% 0 20%;
  }
  .content-wrapper{
     display: flex;

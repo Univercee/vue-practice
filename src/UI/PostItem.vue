@@ -30,10 +30,10 @@ export default {
     display: flex;
   }
   .container{
-    width: 100%;
+    max-width: 100%;
     flex-direction: row;
     justify-content: space-between;
-    padding: 30px 15px;
+    padding: 30px 0 30px 15px;
     border-left: solid DeepSkyBlue 5px;
     margin-bottom: 20px;
   }
