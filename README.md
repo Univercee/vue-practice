@@ -1,4 +1,14 @@
-# vue-learn
+# vue-practice
+
+## Docker build
+```
+npm run build-docker
+```
+
+## Docker run
+```
+npm run run-docker
+```
 
 ## Project setup
 ```
