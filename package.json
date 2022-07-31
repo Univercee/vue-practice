@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "build-docker": "docker build -t vue-practice .",
+    "run-docker": "docker run -p 8080:8080 --rm --name vue-practice vue-practice"
   },
   "dependencies": {
     "axios": "^0.27.2",
