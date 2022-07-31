@@ -1,8 +1,11 @@
 <template>
-    <div>
+    <div class="app-container">
         <post-form @create="addPost($event)"></post-form>
         <div class="content-wrapper">
-            <post-list v-if="postsAreLoaded" :posts="posts" @removePost="removePost($event)" style="margin-top: 2rem; width:100%"></post-list>
+            <div v-if="postsAreLoaded" class="list-wrapper">
+                <my-filter class="my-filter" @update="sortBy($event)" v-model="sortOprion" :options="sortOptions"></my-filter>
+                <post-list :posts="posts" @removePost="removePost($event)" style="margin-top: 2rem; width:100%"></post-list>
+            </div>
             <load-icon v-else class="loader"></load-icon>
         </div>
     </div>
@@ -14,7 +17,13 @@ export default {
     data(){
         return{
             posts: [],
-            postsAreLoaded: false
+            postsAreLoaded: false,
+            sortOprion: "",
+            sortOptions: [
+                {value: "title", name: "By title"},
+                {value: "body", name: "By content"},
+                {value: "id", name: "Default"}
+            ]
         }
     },
     methods: {
@@ -34,14 +43,21 @@ export default {
                     this.posts = response.data
                 })
                 .catch((err)=>{
-                    alert.log(err);
+                    alert(err);
                 })
-            }, 1000)
+            }, 0)
             
         }
     },
     mounted(){
         this.fetchPosts()
+    },
+    watch:{
+        sortOprion(newVal, oldVal){
+            this.posts.sort((a, b)=>{
+                return a[newVal] > b[newVal] ? 1 : (a[newVal] < b[newVal] ? -1 : 0)
+            })
+        }
     }
 }
 </script>
@@ -50,11 +66,22 @@ export default {
  *{
     font-size: 16px;
  }
+ .app-container{
+    margin: 0 20%;
+ }
  .content-wrapper{
     display: flex;
     justify-content: center;
+    margin-top: 3rem;
  }
- .loader{
-    margin-top: 3rem
+ .list-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+ }
+ .my-filter{
+    align-self: flex-end;
+    width: 25%;
+    padding: 10px 15px;
  }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="form-title">Create post</div>
     <input type="text" v-model.trim="post.title" placeholder="Title">
     <input type="text" v-model.trim="post.body" placeholder="Body">
     <button @click="addPost()">Create</button>
@@ -39,6 +40,12 @@ export default {
     }
     .container{
         flex-direction: column;
+    }
+    .form-title{
+        font-size: 30px;
+        font-family: sans-serif;
+        color: LightSkyBlue;
+        font-weight: bold;
     }
     input{
         margin: 1rem 0;
