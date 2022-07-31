@@ -27,14 +27,17 @@ export default {
             })
         },
         async fetchPosts(){
-            await axios.get("https://my-json-server.typicode.com/Univercee/jsonplaceholder/posts")
-            .then((response)=>{
-                this.postsAreLoaded = true
-                this.posts = response.data
-            })
-            .catch((err)=>{
-                alert.log(err);
-            })
+            setTimeout(async ()=>{
+                await axios.get("https://my-json-server.typicode.com/Univercee/jsonplaceholder/posts")
+                .then((response)=>{
+                    this.postsAreLoaded = true
+                    this.posts = response.data
+                })
+                .catch((err)=>{
+                    alert.log(err);
+                })
+            }, 1000)
+            
         }
     },
     mounted(){
