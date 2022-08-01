@@ -7,11 +7,11 @@ import ListSearch from './ListSearch.vue'
 import Pagination from './Pagination.vue'
 
 export default [
-    PostList,
-    PostItem,
-    PostForm,
-    LoadIcon,
-    MyFilter,
-    ListSearch,
-    Pagination
+  PostList,
+  PostItem,
+  PostForm,
+  LoadIcon,
+  MyFilter,
+  ListSearch,
+  Pagination
 ]
