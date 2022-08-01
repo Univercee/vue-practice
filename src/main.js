@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import router from './router'
 import App from "./App.vue";
-import UIComponents from "./UI";
+import UIComponents from "./components/UI";
 
 const app = createApp(App);
 UIComponents.forEach((component) => {
