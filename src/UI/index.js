@@ -4,6 +4,7 @@ import PostForm from './PostForm.vue'
 import LoadIcon from './LoadIcon.vue'
 import MyFilter from './MyFilter.vue'
 import ListSearch from './ListSearch.vue'
+import Pagination from './Pagination.vue'
 
 export default [
     PostList,
@@ -11,5 +12,6 @@ export default [
     PostForm,
     LoadIcon,
     MyFilter,
-    ListSearch
+    ListSearch,
+    Pagination
 ]

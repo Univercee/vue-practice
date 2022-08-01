@@ -3,6 +3,7 @@
         <post-form @create="addPost($event)"></post-form>
         <div class="content-wrapper">
             <div v-if="postsAreLoaded" class="list-wrapper">
+                <my-pagination :totalPages="totalPages" @update:page="updatePage($event)" class="my-pagination"></my-pagination>
                 <div class="list-header">
                     <list-search class="my-list-search" @update="find($event)" v-model="searchQuery"></list-search>
                     <my-filter class="my-filter" @update="sortBy($event)" v-model="sortOprion" :options="sortOptions"></my-filter>
@@ -23,6 +24,9 @@ export default {
             postsAreLoaded: false,
             sortOprion: "",
             searchQuery:"",
+            totalPages: 1,
+            page: 1,
+            limit: 2,
             sortOptions: [
                 {value: "title", name: "By title"},
                 {value: "body", name: "By content"},
@@ -39,10 +43,14 @@ export default {
                 return item.id != id
             })
         },
+        updatePage(page){
+            this.page = page
+        },
         async fetchPosts(){
             setTimeout(async ()=>{
                 await axios.get("https://my-json-server.typicode.com/Univercee/jsonplaceholder/posts")
                 .then((response)=>{
+                    this.totalPages = Math.ceil(response.data.length/this.limit)
                     this.postsAreLoaded = true
                     this.posts = response.data
                 })
@@ -58,7 +66,7 @@ export default {
     },
     computed:{
         sortedPosts(){
-            return [...this.posts].sort((a, b)=>{
+            return [...this.paginatedPosts].sort((a, b)=>{
                 return a[this.sortOprion] > b[this.sortOprion] ? 1 : (a[this.sortOprion] < b[this.sortOprion] ? -1 : 0)
             })
         },
@@ -66,6 +74,9 @@ export default {
             return this.sortedPosts.filter((post)=>{
                 return post.title.toLowerCase().includes(this.searchQuery)
             })
+        },
+        paginatedPosts(){
+            return this.posts.slice((this.page-1)*this.limit, this.page*this.limit)
         }
     }
 }
@@ -102,5 +113,8 @@ export default {
     align-self: center;
     width: 25%;
     padding: 10px 15px;
+ }
+ .my-pagination{
+    margin-bottom: 2rem;
  }
 </style>
