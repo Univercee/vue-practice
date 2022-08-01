@@ -1,8 +1,0 @@
-/dist
-/node_modules
-/public
-Dockerfile
-package*.json
-*.md
-*.config.*
-*config.*
