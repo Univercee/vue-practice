@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import eventBus from '../tools/eventBus.js'
 export default {
   name: "my-pagination",
   data() {
@@ -31,6 +32,11 @@ export default {
       this.$emit("update:page", page);
     },
   },
+  created(){
+    eventBus.$on('search', ()=>{
+      this.setPage(1)
+    })
+  }
 };
 </script>
 

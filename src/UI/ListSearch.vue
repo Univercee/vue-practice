@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import eventBus from '../tools/eventBus.js'
 export default {
   name: "list-search",
   props: {
@@ -19,6 +20,7 @@ export default {
   },
   methods: {
     changeQuery(event) {
+      eventBus.$emit('search')
       this.$emit("update:modelValue", event.target.value.toLowerCase());
     },
   },

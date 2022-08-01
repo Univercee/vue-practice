@@ -11,7 +11,6 @@
         <div class="list-header">
           <list-search
             class="my-list-search"
-            @update="find($event)"
             v-model="searchQuery"
           ></list-search>
           <my-filter
@@ -22,7 +21,7 @@
           ></my-filter>
         </div>
         <post-list
-          :posts="sortedAndFoundPosts"
+          :posts="paginatedPosts"
           @removePost="removePost($event)"
           style="margin-top: 2rem; width: 100%"
         ></post-list>
@@ -43,7 +42,7 @@ export default {
       searchQuery: "",
       totalPages: 1,
       page: 1,
-      limit: 2,
+      limit: 10,
       sortOptions: [
         { value: "title", name: "By title" },
         { value: "body", name: "By content" },
@@ -64,13 +63,11 @@ export default {
       this.page = page;
     },
     async fetchPosts() {
+      this.postsAreLoaded = false;
       setTimeout(async () => {
         await axios
-          .get(
-            "https://my-json-server.typicode.com/Univercee/jsonplaceholder/posts"
-          )
+          .get("https://jsonplaceholder.typicode.com/posts")
           .then((response) => {
-            this.totalPages = Math.ceil(response.data.length / this.limit);
             this.postsAreLoaded = true;
             this.posts = response.data;
           })
@@ -83,14 +80,19 @@ export default {
   mounted() {
     this.fetchPosts();
   },
+  watch:{
+    sortedAndFoundPosts:{
+      handler(newVal, oldVal){
+        this.totalPages = Math.ceil(newVal.length / this.limit);
+      },
+      deep: true
+    },
+    
+  },
   computed: {
     sortedPosts() {
-      return [...this.paginatedPosts].sort((a, b) => {
-        return a[this.sortOprion] > b[this.sortOprion]
-          ? 1
-          : a[this.sortOprion] < b[this.sortOprion]
-          ? -1
-          : 0;
+      return this.posts.sort((a, b) => {
+        return a[this.sortOprion] > b[this.sortOprion] ? 1 : a[this.sortOprion] < b[this.sortOprion] ? -1 : 0;
       });
     },
     sortedAndFoundPosts() {
@@ -99,10 +101,7 @@ export default {
       });
     },
     paginatedPosts() {
-      return this.posts.slice(
-        (this.page - 1) * this.limit,
-        this.page * this.limit
-      );
+      return this.sortedAndFoundPosts.slice((this.page - 1) * this.limit, this.page * this.limit);
     },
   },
 };
